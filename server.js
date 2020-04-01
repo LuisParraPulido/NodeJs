@@ -1,5 +1,7 @@
 const express = require('express');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+
+const response = require('./network/response')
 const router = express.Router();
 
 const app = express();
@@ -12,17 +14,17 @@ router.get('/message', function(req, res) {
   res.header({
     "custom-header": "Nuestro valor personalizado",
   })
-  res.send('List of messages');
+  response.success(req, res, 'List of messages');
 })
 router.post('/message', function(req, res) {
   console.log(req.query);
-  console.log(req.body);
-  res.status(201).send({error: '', body: 'Creado correctamente'});
+  if (req.query.error == 'ok') {
+  response.error(req, res, 'simulated Error', 400);
+  } else {
+    response.success(req, res, 'Created', 201);
+  }
 })
 
-// app.use('/', function (req, res) {
-//   res.send('Hola');
-// });
 
 app.listen(3000);
 console.log('La aplicación está escuchando en http://localhost:3000');
