@@ -12,13 +12,13 @@ router.get('/', function(req, res) {
 })
 router.post('/', function(req, res) {
   
-  controller.addMessage(req.body.user, req.body.message);
-
-  if (req.query.error == 'ok') {
-  response.error(req, res, 'Unexpected Error', 500, 'This is a simulation of errors');
-  } else {
-    response.success(req, res, 'Created', 201);
-  }
+  controller.addMessage(req.body.user, req.body.message)
+    .then((fullmessage) => {
+    response.success(req, res, fullmessage, 201);
+    })
+    .catch(error => {
+      response.error(req, res, 'Invalid Data ', 400, 'This is a simulation of errors');
+    })
 });
 
 module.exports = router;
