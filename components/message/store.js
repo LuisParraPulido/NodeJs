@@ -1,19 +1,4 @@
-const { config } = require('../../config');
-const db = require('mongoose');
 const Model = require('./model');
-
-const USER = encodeURIComponent(config.dbUser);
-const PASSWORD = encodeURIComponent(config.dbPassword);
-const DB_NAME = config.dbName;
-
-const MONGO_URI = `mongodb+srv://${USER}:${PASSWORD}@${config.dbHost}/${DB_NAME}?retryWrites=true&w=majority`;
-
-db.Promise = global.Promise;
-db.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-console.log('[db] connected succesfully');
 
 function addMessage(message) {
   const myMessage = new Model(message);
