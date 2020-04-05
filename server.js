@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 
+const cors = require('cors')
 const bodyParser = require('body-parser');
 const socket = require('./socket')
 const db = require('./db');
@@ -14,7 +15,7 @@ const DB_NAME = config.dbName;
 const MONGO_URI = `mongodb+srv://${USER}:${PASSWORD}@${config.dbHost}/${DB_NAME}?retryWrites=true&w=majority`;
 db(MONGO_URI);
 
-
+app.use(cors())
 app.use(bodyParser.json());
 
 socket.connect(server);
